@@ -2,21 +2,22 @@
 
 namespace Database\Factories;
 
-use App\Models\Profile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Profile>
+ */
 class ProfileFactory extends Factory
 {
-    protected $model = Profile::class;
-
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
     public function definition(): array
     {
         return [
-            'bio' => $this->faker->paragraph(),
-            'website' => $this->faker->url(),
-            'twitter' => $this->faker->userName(),
-            'created_at' => now(),
-            'updated_at' => now(),
+            'bio' => $this->faker->paragraph,
         ];
     }
 }
