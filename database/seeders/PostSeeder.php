@@ -1,23 +1,25 @@
 <?php
 
+namespace Database\Seeders;
+
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Post;
-use App\Models\Tag;
 
 class PostSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
     {
-        // Create 1000 posts
-        $posts = Post::factory()->count(1000)->create();
+        $this->call([
+            UserSeeder::class,
+        ]);
 
-        // Get all tags
-        $tags = Tag::all();
-
-        // Attach random tags to each post
-        $posts->each(function ($post) use ($tags) {
-            $randomTags = $tags->random(rand(1, 3)); // Random number of tags between 1 and 3 per post
-            $post->tags()->attach($randomTags->pluck('id'));
+        \App\Models\User::all()->each(function (\App\Models\User $user): void {
+            $user->posts()->saveMany(
+                \App\Models\Post::factory(5)->make()
+            );
         });
     }
 }

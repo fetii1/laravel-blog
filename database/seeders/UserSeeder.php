@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Profile;
-use App\Models\User;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -13,8 +12,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->count(10)->create()->each(fn($user) => $user->profile()->save(Profile::factory()->make()));
+        \App\Models\User::factory(10)->create();
     }
 }
-
-
