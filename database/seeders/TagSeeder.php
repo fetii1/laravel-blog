@@ -4,18 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\User;
-use App\Models\Profile;
+use App\Models\Tag;
 
-class UserSeeder extends Seeder
+class TagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory(10)->create()->each(function ($user) {
-            $user->profile()->save(Profile::factory()->make());
-        });
+        $tags = ['Laravel', 'PHP', 'JavaScript', 'CSS', 'HTML'];
+
+        foreach ($tags as $tag) {
+            Tag::create(['name' => $tag]);
+        }
     }
 }
