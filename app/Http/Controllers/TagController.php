@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
     // Display all posts for a specific tag
-    public function show($id)
+    public function show(Tag $tag)
     {
-        $tag = Tag::with('posts')->findOrFail($id);
-
-        return view('tags.show', ['tag' => $tag, 'posts' => $tag->posts]);
+        return view('tags.show', compact('tag'));
     }
 }
 
