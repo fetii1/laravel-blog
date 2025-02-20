@@ -26,20 +26,20 @@ class PostController extends Controller
     // Store a newly created blog post
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validated = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
-            'image' => 'nullable|image|max:2048', // 2MB Max
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-		// we already showed how you can create a user post
-        $post = auth()->user()->posts()->create($validatedData);
-
-		// now let's add our image to the post we wrote
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('images', 'public');
-            $post->images()->create(['path' => $path]);
+            // Store the image and get the path relative to the storage/app/public directory
+            $imagePath = $request->file('image')->store('posts', 'public');
+            // Now $imagePath will be something like: "posts/filename.jpg"
+            $validated['image'] = $imagePath;
         }
+
+        $post = auth()->user()->posts()->create($validated);
 
         return redirect()->route('posts.show', $post);
     }

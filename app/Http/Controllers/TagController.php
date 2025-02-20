@@ -10,7 +10,8 @@ class TagController extends Controller
     // Display all posts for a specific tag
     public function show(Tag $tag)
     {
-        return view('tags.show', compact('tag'));
+        $posts = $tag->posts()->paginate(10); // Show 10 posts per page
+        return view('tags.show', compact('tag', 'posts'));
     }
 }
 

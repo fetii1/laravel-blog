@@ -11,7 +11,11 @@
                 <div class="p-6 text-gray-900">
                     @foreach ($allPosts as $post)
                         <div class="mb-4">
-                            <p>{{ $post->title }}</p>
+                            <a href="{{ route('posts.show', $post) }}">
+                                <h4 class="text-xl font-medium mb-2">{{ $post->title }}</h4>
+                                <img src="{{ $post->image }}" class="mb-2">
+                                <p>{{ $post->user->name }}</p>
+                            </a>
                         </div>
                     @endforeach
                 </div>

@@ -11,15 +11,24 @@
                 <div class="p-6 text-gray-900">
                     {{-- Add your tag-specific content here --}}
                     <h3 class="text-lg font-semibold mb-4">Posts with {{ $tag->name }} tag:</h3>
-                    @forelse($tag->posts as $post)
-                        <div class="mb-4">
+                    @forelse($posts as $post)
+                        <div class="mb-4 ring-2 rounded-lg p-4">
                             <a href="{{ route('posts.show', $post) }}">
-                                <h4 class="text-md font-medium">{{ $post->title }}</h4>
+                                <h4 class="text-xl font-medium mb-2">{{ $post->title }}</h4>
+                                @if ($post->image)
+                                    <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}"
+                                        class="mb-2">
+                                @endif
+                                <p>{{ $post->user->name }}</p>
                             </a>
                         </div>
                     @empty
                         <p>No posts found with this tag.</p>
                     @endforelse
+
+                    <div class="mt-6">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             </div>
         </div>
