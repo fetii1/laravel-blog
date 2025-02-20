@@ -12,8 +12,9 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('user', 'tags')->latest()->paginate();
+        $allPosts = Post::all();
 
-        return view('posts.index', ['posts' => $posts]);
+        return view('posts.index', ['posts' => $posts, 'allPosts' => $allPosts]);
     }
 
     // Show a form for creating a new blog post

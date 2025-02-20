@@ -11,7 +11,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+
+    return view('dashboard', $tags = Tag::all());
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -20,14 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// Replace these closure routes with controller routes
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-
-// If you need the posts routes, consider creating a PostController
-Route::get('/users/{user}/posts/{post}', [PostController::class, 'show'])
-    ->name('user.posts.show');
-Route::get('/posts/{post}', [PostController::class, 'show'])
-    ->name('posts.show');
+Route::get('/posts', [PostController::class, 'index']);
 
 require __DIR__.'/auth.php';

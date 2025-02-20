@@ -16,11 +16,13 @@ class UserController extends Controller
     }
 
     // Display a user and their profile
-    public function show($id)
-    {
-        $user = User::with('profile')->findOrFail($id);
-        return view('users.show', ['user' => $user]);
 
-    }
+        public function show($id)
+        {
+            $user = User::with(['profile', 'posts'])->findOrFail($id);  // Correct way to eager load
+            return view('users.show', ['user' => $user]);
+        }
+
+
 }
 
