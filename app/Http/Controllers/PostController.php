@@ -48,6 +48,9 @@ class PostController extends Controller
     // Display a single blog post
     public function show($id)
     {
+        if (!auth()-user()->can('view posts')) {
+            return redirect()->route('posts.index');
+        }
         $post = Post::with('user', 'tags', 'images')
 							->findOrFail($id);
 
@@ -57,6 +60,10 @@ class PostController extends Controller
     // Show a form for editing the specified blog post
     public function edit($id)
     {
+        if(!auth(-user()->hasRole(['admin', 'author']))) {
+            return redirect()->route('posts.show', $post);
+        }
+
         $post = Post::findOrFail($id);
         $tags = Tag::all();
         return view('posts.edit', ['post' => $post, 'tags' => $tags]);
@@ -65,6 +72,11 @@ class PostController extends Controller
     // Update the specified blog post
     public function update(Request $request, Post $post)
     {
+
+        if (!auth()->user()->can('edit posts')) {
+            return redirect()->route('posts.show', $post);
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
@@ -86,6 +98,11 @@ class PostController extends Controller
     // Remove the specified blog post
     public function destroy(Post $post)
     {
+
+        if (!auth()->user()->hasRole('admin')) {
+            return redirect()->route('posts.show', $post);
+        }
+
         $post->delete();
 
         return redirect()->route('posts.index');

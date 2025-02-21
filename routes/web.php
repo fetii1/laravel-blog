@@ -22,6 +22,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin', function (){
+        return 'Welcome Admin';
+    });
+});
+
+Route::group(['middleware' => ['permission:edit posts']], function () {
+    Route::get('/posts/{post}', function (){
+        return 'Welcome Author';
+    });
+});
+
 Route::get('/posts', [PostController::class, 'index'])
 					->name('posts.index');
 Route::get('/posts/create', [PostController::class, 'create'])
