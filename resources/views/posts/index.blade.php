@@ -15,6 +15,11 @@
                                 <h4 class="text-xl font-medium mb-2">{{ $post->title }}</h4>
                                 <img src="{{ $post->image }}" class="mb-2">
                                 <p>{{ $post->user->name }}</p>
+                                @if ($post->user->is_author)
+                                    <p>Author True</p>
+                                    @else
+                                    <p>Author False</p>
+                                @endif
                             </a>
                         </div>
                     @endforeach

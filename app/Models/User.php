@@ -21,10 +21,16 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function isAuthor()
+    {
+        return $this->is_author;
+    }
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'is_author',
     ];
 
     protected $hidden = [
